@@ -24,6 +24,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-itik*tj#h_mgwwn@4*g7a826z%1@rznk1vlgax29_*ks(t3o92'
 
+# BASE CONFIGURATION
+SETTINGS_DIR = path.dirname(__file__)
+PROJECT_ROOT = path.dirname(SETTINGS_DIR)
+PROJECT_NAME = path.basename(PROJECT_ROOT)
+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 TEST = False
@@ -40,7 +45,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    'quizmaster.apps.users',
 ]
+
+AUTH_USER_MODEL = 'users.User'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
