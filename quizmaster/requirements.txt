@@ -1,4 +1,6 @@
 Django==5.1.1
 django-model-utils==4.5.1
+django-thumbnails==0.8.0
+django-redis==5.4.0
 
 psycopg2-binary==2.9.9
