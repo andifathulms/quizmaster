@@ -52,6 +52,9 @@ INSTALLED_APPS = [
     'quizmaster.apps.organizations',
     'quizmaster.apps.participants',
     'quizmaster.apps.submissions',
+
+    'tailwind',
+    'theme',
 ]
 
 AUTH_USER_MODEL = 'users.User'
@@ -174,6 +177,12 @@ STATICFILES_DIRS = (
 
 MEDIA_ROOT = path.join(PROJECT_ROOT, 'media')
 MEDIA_URL = '/media/'
+
+TAILWIND_APP_NAME = 'theme'
+
+INTERNAL_IPS = [
+    "127.0.0.1",
+]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
