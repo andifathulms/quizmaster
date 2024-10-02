@@ -20,8 +20,13 @@ from django.conf.urls.static import static
 from django.conf import settings
 from django.views.static import serve
 
+from . import views
+
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', views.index, name="index"),
+    path('login/', views.login_view, name="login"),
+    path('logout/', views.logout_view, name="logout"),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 if settings.DEBUG:

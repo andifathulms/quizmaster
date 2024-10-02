@@ -1,0 +1,111 @@
+{% extends 'base.html' %}
+
+{% block title %}Login{% endblock %}
+
+{% block extra_css %}
+<style>
+    /* Center the form */
+    .login-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        background-color: #f4f4f4;
+    }
+
+    .login-card {
+        background: #fff;
+        border-radius: 12px;
+        box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.1);
+        padding: 40px;
+        max-width: 400px;
+        width: 100%;
+    }
+
+    .login-card h2 {
+        font-size: 1.75rem;
+        font-weight: bold;
+        margin-bottom: 20px;
+        text-align: center;
+    }
+
+    .login-card label {
+        font-size: 1rem;
+        font-weight: 600;
+        margin-bottom: 8px;
+        display: block;
+    }
+
+    .login-card input {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        margin-bottom: 20px;
+        font-size: 1rem;
+        outline: none;
+    }
+
+    .login-card input:focus {
+        border-color: #4caf50;
+    }
+
+    .login-card button {
+        width: 100%;
+        padding: 12px;
+        border: none;
+        border-radius: 8px;
+        background-color: #4caf50;
+        color: white;
+        font-size: 1.1rem;
+        font-weight: bold;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+    .login-card button:hover {
+        background-color: #388e3c;
+    }
+
+    .login-card .extra-links {
+        text-align: center;
+        margin-top: 15px;
+    }
+
+    .login-card .extra-links a {
+        color: #4caf50;
+        text-decoration: none;
+        font-weight: bold;
+    }
+
+    .login-card .extra-links a:hover {
+        text-decoration: underline;
+    }
+</style>
+{% endblock extra_css %}
+
+{% block content %}
+<div class="login-container">
+    <div class="login-card">
+        <h2>Login to Your Account</h2>
+        <form method="POST" action="{% url 'login' %}">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="id_username">Email or Username</label>
+                {{ form.username }}
+                {{ form.username.errors }}
+            </div>
+            <div class="form-group">
+                <label for="id_password">Password</label>
+                {{ form.password }}
+                {{ form.password.errors }}
+            </div>
+            <button type="submit">Login</button>
+        </form>
+        <div class="extra-links">
+            <p><a href="#">Forgot your password?</a></p>
+            <p>Don't have an account? <a href="#">Sign up</a></p>
+        </div>
+    </div>
+</div>
+{% endblock content %}

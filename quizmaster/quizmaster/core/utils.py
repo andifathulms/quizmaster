@@ -1,8 +1,14 @@
 import os
 import shortuuid
 
-from django.utils import timezone
+from django.contrib.auth import logout
+from django.http import HttpRequest
+from django.shortcuts import redirect
 from django.template.defaultfilters import slugify
+from django.urls import reverse
+from django.utils import timezone
+
+from typing import Any
 
 
 class FilenameGenerator(object):
@@ -25,6 +31,21 @@ class FilenameGenerator(object):
             filename + extension
         ])
         return path
+
+
+def get_redirect_url(request: HttpRequest, user: Any) -> redirect:
+    next = request.GET.get('next')
+
+    if user.is_superuser:
+        redirect_url = next or reverse('index')
+    else:
+        logout(request)
+        redirect_url = reverse('login')
+
+    if next:
+        redirect_url = next
+
+    return redirect_url
 
 
 try:
