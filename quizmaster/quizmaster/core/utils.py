@@ -37,7 +37,7 @@ def get_redirect_url(request: HttpRequest, user: Any) -> redirect:
     next = request.GET.get('next')
 
     if user.is_superuser:
-        redirect_url = next or reverse('index')
+        redirect_url = next or reverse('instructors:index')
     else:
         logout(request)
         redirect_url = reverse('login')

@@ -27,6 +27,9 @@ urlpatterns = [
     path('', views.index, name="index"),
     path('login/', views.login_view, name="login"),
     path('logout/', views.logout_view, name="logout"),
+
+    path('instructors/', include('quizmaster.instructors.urls')),
+    path('participants/', include('quizmaster.participants.urls')),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 if settings.DEBUG:

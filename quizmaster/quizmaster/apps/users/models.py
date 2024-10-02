@@ -19,3 +19,20 @@ class User(AbstractUser):
 
     is_active = models.BooleanField(default=True)
     created = AutoCreatedField()
+
+    instructors = models.ManyToManyField('instructors.Instructor', related_name="users",
+                                         through='UserToInstructorEdge', through_fields=('user', 'instructor'))
+    participants = models.ManyToManyField('participants.Participant', related_name="users",
+                                          through='UserToParticipantEdge', through_fields=('user', 'participant'))
+    active_instructor_id = models.PositiveIntegerField(blank=True, null=True)
+    active_participant_id = models.PositiveIntegerField(blank=True, null=True)
+
+
+class UserToInstructorEdge(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    instructor = models.ForeignKey('instructors.Instructor', on_delete=models.CASCADE)
+
+
+class UserToParticipantEdge(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    participant = models.ForeignKey('participants.Participant', on_delete=models.CASCADE)
