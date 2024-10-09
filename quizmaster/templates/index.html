@@ -10,15 +10,21 @@
         font-weight: bold;
     }
 
-    /* Neuromorphic look */
+    /* Neuromorphic look for light mode */
     .neuromorphic {
-        background: #f9f9f9; /* Clean white background */
+        background: #f9f9f9;
         box-shadow: 8px 8px 20px rgba(0, 0, 0, 0.15), -8px -8px 20px rgba(255, 255, 255, 0.9);
         border-radius: 12px;
         padding: 20px;
     }
 
-    /* Neuromorphic button */
+    /* Neuromorphic look for dark mode */
+    .dark .neuromorphic {
+        background: #2b2b2b;
+        box-shadow: 8px 8px 20px rgba(0, 0, 0, 0.6), -8px -8px 20px rgba(50, 50, 50, 0.9);
+    }
+
+    /* Neuromorphic button styles for both light and dark mode */
     .neuromorphic-button {
         border-radius: 12px;
         color: #fff;
@@ -26,23 +32,30 @@
         text-align: center;
         padding: 12px;
         transition: all 0.3s ease;
-        flex: 1; /* Make buttons equal width */
-        margin: 0 5px; /* Gap between buttons */
+        flex: 1;
+        margin: 0 5px;
     }
 
-    /* Previous Button */
+    /* Button background colors */
     .button-previous {
         background-color: #87cefa; /* Light Sky Blue */
     }
-
-    /* Next Button */
     .button-next {
         background-color: #ffa07a; /* Light Salmon */
     }
-
-    /* Finish Quiz Button */
     .button-finish {
         background-color: #3cb371; /* Medium Sea Green */
+    }
+
+    /* Dark mode button styling */
+    .dark .button-previous {
+        background-color: #3a91d1;
+    }
+    .dark .button-next {
+        background-color: #e76f51;
+    }
+    .dark .button-finish {
+        background-color: #2a9d8f;
     }
 
     /* Button hover effects */
@@ -50,7 +63,7 @@
         opacity: 0.9;
     }
 
-    /* Highlight on button click */
+    /* Button active state (click highlight) */
     .neuromorphic-button:active {
         box-shadow: inset 5px 5px 10px rgba(0, 0, 0, 0.2), inset -5px -5px 10px rgba(255, 255, 255, 0.7);
     }
@@ -61,21 +74,20 @@
         bottom: 0;
         width: 100%;
         text-align: center;
-        margin-top: auto; /* Ensures it sticks properly */
+        margin-top: auto;
     }
 
     /* Choice highlight */
     label.bg-elegant-green {
-        background-color: #4caf50; /* Emerald green */
-        color: white; /* White text */
-        font-weight: bold; /* Bold text */
+        background-color: #4caf50;
+        color: white;
+        font-weight: bold;
         border-color: #388e3c;
     }
 
-    /* Ensure the selected choice does not have shadows */
     label.bg-elegant-green:hover {
-        background-color: #4caf50; /* Keep the same emerald green on hover */
-        color: white; /* Maintain white text on hover */
+        background-color: #4caf50;
+        color: white;
     }
 
     label.border-blue-500 {
@@ -86,35 +98,54 @@
     label {
         transition: background-color 0.3s ease, color 0.3s ease;
     }
+
+    /* Dark mode choice backgrounds */
+    .dark label {
+        background-color: #2b2b2b;
+        color: #e0e0e0;
+    }
+
+    .dark label:hover {
+        background-color: #3b3b3b;
+    }
+
+    /* Background for sidebar */
+    aside {
+        background-color: white;
+    }
+
+    .dark aside {
+        background-color: #1e1e1e;
+    }
 </style>
 {% endblock extra_css %}
 
 {% block content %}
 <div class="flex justify-center items-center min-h-screen mt-8">
     <!-- Main Flex Container -->
-    <div class="flex w-full max-w-6xl bg-white shadow-md rounded-lg p-6">
+    <div class="flex w-full max-w-6xl bg-white dark:bg-[#2b2b2b] shadow-md rounded-lg p-6">
         <!-- Main Quiz Content Section -->
-        <div class="w-full max-w-4xl bg-gray-50 shadow-md rounded-lg p-6 space-y-6 neuromorphic">
+        <div class="w-full max-w-4xl bg-gray-50 dark:bg-[#1e1e1e] shadow-md rounded-lg p-6 space-y-6 neuromorphic">
             <!-- Question Box -->
             <div class="neuromorphic">
-                <h3 class="text-lg font-semibold mb-3">Question 1:</h3>
-                <p class="text-gray-700">What is the capital of France?</p>
+                <h3 class="text-lg font-semibold mb-3 text-gray-700 dark:text-gray-200">Question 1:</h3>
+                <p class="text-gray-700 dark:text-gray-300">What is the capital of France?</p>
             </div>
 
             <!-- Choices Box -->
             <div class="">
-                <h4 class="text-lg font-semibold mb-4">Choices:</h4>
+                <h4 class="text-lg font-semibold mb-4 text-gray-700 dark:text-gray-200">Choices:</h4>
                 <div class="space-y-3">
-                    <label class="block bg-white border border-gray-200 p-4 rounded-lg shadow-md cursor-pointer hover:bg-gray-100" onclick="selectChoice(this)">
+                    <label class="block bg-white dark:bg-[#2b2b2b] dark:text-gray-300 border border-gray-200 dark:border-gray-600 p-4 rounded-lg shadow-md cursor-pointer hover:bg-gray-100 dark:hover:bg-[#3b3b3b]" onclick="selectChoice(this)">
                         <input type="radio" name="question1" value="A" class="mr-2 hidden"> A. Paris
                     </label>
-                    <label class="block bg-white border border-gray-200 p-4 rounded-lg shadow-md cursor-pointer hover:bg-gray-100" onclick="selectChoice(this)">
+                    <label class="block bg-white dark:bg-[#2b2b2b] dark:text-gray-300 border border-gray-200 dark:border-gray-600 p-4 rounded-lg shadow-md cursor-pointer hover:bg-gray-100 dark:hover:bg-[#3b3b3b]" onclick="selectChoice(this)">
                         <input type="radio" name="question1" value="B" class="mr-2 hidden"> B. London
                     </label>
-                    <label class="block bg-white border border-gray-200 p-4 rounded-lg shadow-md cursor-pointer hover:bg-gray-100" onclick="selectChoice(this)">
+                    <label class="block bg-white dark:bg-[#2b2b2b] dark:text-gray-300 border border-gray-200 dark:border-gray-600 p-4 rounded-lg shadow-md cursor-pointer hover:bg-gray-100 dark:hover:bg-[#3b3b3b]" onclick="selectChoice(this)">
                         <input type="radio" name="question1" value="C" class="mr-2 hidden"> C. Berlin
                     </label>
-                    <label class="block bg-white border border-gray-200 p-4 rounded-lg shadow-md cursor-pointer hover:bg-gray-100" onclick="selectChoice(this)">
+                    <label class="block bg-white dark:bg-[#2b2b2b] dark:text-gray-300 border border-gray-200 dark:border-gray-600 p-4 rounded-lg shadow-md cursor-pointer hover:bg-gray-100 dark:hover:bg-[#3b3b3b]" onclick="selectChoice(this)">
                         <input type="radio" name="question1" value="D" class="mr-2 hidden"> D. Madrid
                     </label>
                 </div>
@@ -128,20 +159,20 @@
         </div>
 
         <!-- Sidebar for Question Navigation -->
-        <aside class="ml-6 bg-white shadow-md rounded-lg p-6 flex-shrink-0 neuromorphic">
+        <aside class="ml-6 bg-white dark:bg-[#1e1e1e] shadow-md rounded-lg p-6 flex-shrink-0 neuromorphic">
             <!-- Quiz Info Section -->
             <div class="mb-6 neuromorphic">
-                <h4 class="text-lg font-semibold text-center mb-4">Quiz Info</h4>
+                <h4 class="text-lg font-semibold text-center mb-4 text-gray-700 dark:text-gray-200">Quiz Info</h4>
                 <div class="text-center">
-                    <p class="countdown mb-2">Time Left: <span id="time-left">10:00</span></p>
-                    <p class="mb-2">Questions Answered: <span id="questions-answered">0</span> / 15</p>
+                    <p class="countdown mb-2 text-gray-700 dark:text-gray-200">Time Left: <span id="time-left">10:00</span></p>
+                    <p class="mb-2 text-gray-700 dark:text-gray-200">Questions Answered: <span id="questions-answered">0</span> / 15</p>
                 </div>
             </div>
 
             <!-- Question Navigation -->
-            <h4 class="text-lg font-semibold mb-4 text-center">Questions</h4>
+            <h4 class="text-lg font-semibold mb-4 text-gray-700 dark:text-gray-200 text-center">Questions</h4>
             <ul class="grid grid-cols-5 gap-4">
-                <li><a href="#" class="block py-3 px-3 bg-gray-100 border border-gray-200 rounded-lg text-center hover:bg-gray-200">1</a></li>
+                <li><a href="#" class="block py-3 px-3 bg-gray-100 dark:bg-[#3b3b3b] border border-gray-200 dark:border-gray-600 rounded-lg text-center hover:bg-gray-200 dark:hover:bg-[#4b4b4b]">1</a></li>
                 <!-- Add other question links similarly -->
             </ul>
 
@@ -167,26 +198,23 @@
         
         // Update timer color
         if (timeLeft <= 60) {
-            timerElement.style.color = 'red';
-        } else if (timeLeft <= 180) {
-            timerElement.style.color = 'orange';
-        } else {
-            timerElement.style.color = 'green';
+            timerElement.classList.add('text-red-500');
         }
 
-        if (timeLeft > 0) timeLeft--;
+        if (timeLeft > 0) {
+            timeLeft--;
+        } else {
+            // Optionally auto-submit the quiz here
+        }
     }
 
     setInterval(updateTimer, 1000);
 
-    // Choice selection logic
-    function selectChoice(element) {
-        const choices = element.parentNode.querySelectorAll('label');
-        choices.forEach(choice => {
-            choice.classList.remove('bg-elegant-green');
-            choice.classList.remove('border-blue-500');
-        });
-        element.classList.add('bg-elegant-green', 'border-blue-500');
+    // Select choice
+    function selectChoice(label) {
+        const allLabels = document.querySelectorAll('label');
+        allLabels.forEach(l => l.classList.remove('bg-elegant-green'));
+        label.classList.add('bg-elegant-green');
     }
 </script>
 {% endblock extra_js %}

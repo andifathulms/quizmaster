@@ -37,7 +37,17 @@ def get_redirect_url(request: HttpRequest, user: Any) -> redirect:
     next = request.GET.get('next')
 
     if user.is_superuser:
+        if user.active_instructor_id:
+            redirect_url = next or reverse('instructors:index')
+        elif user.active_participant_id:
+            redirect_url = next or reverse('participants:index')
+
+    elif user.instructors.exists():
         redirect_url = next or reverse('instructors:index')
+
+    elif user.participants.exists():
+        redirect_url = next or reverse('participants:index')
+
     else:
         logout(request)
         redirect_url = reverse('login')
@@ -45,7 +55,7 @@ def get_redirect_url(request: HttpRequest, user: Any) -> redirect:
     if next:
         redirect_url = next
 
-    return redirect_url
+    return reverse('instructors:index')
 
 
 try:

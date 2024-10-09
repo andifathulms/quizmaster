@@ -1,5 +1,5 @@
 {% load static tailwind_tags %}
-<html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,37 +9,142 @@
     <title>{{ title }}</title>
 
     {% tailwind_css %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap">
+    <style>
+        /* Dark mode styles */
+        body.dark {
+            background-color: #121212;
+            color: #e0e0e0;
+        }
+
+        header {
+            background-color: #ffffff;
+            color: #333;
+        }
+
+        body.dark header {
+            background-color: #1e1e1e;
+            color: #e0e0e0;
+        }
+
+        footer {
+            background-color: #ffffff;
+            color: #888;
+        }
+
+        body.dark footer {
+            background-color: #1e1e1e;
+            color: #e0e0e0;
+        }
+
+        .navLinks {
+            background-color: #ffffff;
+        }
+
+        body.dark .navLinks {
+            background-color: #1e1e1e;
+            color: #e0e0e0;
+        }
+
+        .hover-bg-dark:hover {
+            background-color: #333 !important;
+        }
+
+        .toggle-theme {
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .toggle-theme .fa-sun {
+            display: none;
+        }
+
+        body.light .fa-sun {
+            display: block;
+        }
+
+        body.light .fa-moon {
+            display: none;
+        }
+        /* Neon styles */
+        .dark .navLinks a {
+            color: #0ff; /* Neon teal */
+        }
+        .dark .navLinks a:hover {
+            color: #ff0; /* Neon yellow */
+        }
+        .navLinks a:hover {
+            color: #00f; /* Neon blue for light mode */
+        }
+
+        /* Profile dropdown */
+        #profileDropdown {
+            display: none;
+        }
+
+        /* Mobile menu slide-in */
+        .open {
+            transform: translateX(0);
+        }
+    </style>
 
     {% block extra_css %}{% endblock %}
 </head>
-<body class="bg-gray-100 text-gray-900 min-h-screen flex flex-col">
-    <header class="fixed top-0 left-0 w-full shadow-lg bg-white z-50">
+<body class="bg-gray-100 text-gray-900 dark:bg-[#121212] dark:text-[#e0e0e0] min-h-screen flex flex-col light">
+    <!-- Header -->
+    <header class="fixed top-0 left-0 w-full shadow-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white z-50">
         <nav class="container max-w-full lg:max-w-[80rem] mx-auto flex justify-between items-center py-4 px-4">
             <div class="w-[130px] md:w-[200px] flex items-center">
-                <a href="{% url 'index' %}" class="text-2xl font-bold text-[#333]">
+                <a href="{% url 'index' %}" class="text-2xl font-bold text-[#333] dark:text-white">
                     QuizMaster
                 </a>
-            </div>            
-
+            </div>
             <div class="flex items-center gap-3">
-                <div class="navLinks duration-500 absolute md:static md:w-auto w-full md:h-auto h-[85vh] bg-white flex md:items-center gap-[1.5vw] top-[100%] left-[-100%] px-5 md:py-0 py-5">
-                    <ul class="flex md:flex-row flex-col md:items-center md:gap-[1vw]">
-                        {% if user.is_authenticated and user.is_superuser %}
-                            <li class="relative px-4 py-5 hover:bg-[#F1F1F1] text-[#333] rounded-lg w-full md:w-auto">
-                                <a href="{% url 'logout' %}">Logout</a>
-                            </li>
-                        {% endif %}
-                    </ul>                                                                     
+                {% block navbar %}{% endblock %}
+
+                <div class="toggle-theme cursor-pointer" onclick="toggleTheme()">
+                    <i class="fa-solid fa-moon dark:hidden"></i>
+                    <i class="fa-solid fa-sun hidden dark:inline"></i>
                 </div>
-                <div class="flex items-center gap-2">
-                    <i class="fa-solid fa-bars menu-icon" onclick="onMenuToggle(this)"></i>
-                </div> 
+                <div class="hidden md:block h-8 w-px bg-gray-300 dark:bg-gray-600 mx-2"></div>
+                {% if user.is_authenticated %}
+                <div class="relative">
+                    <button id="profileButton" class="flex items-center space-x-2 focus:outline-none">
+                        <span class="hidden md:inline">Andi Fathul</span>
+                        <i class="fa-solid fa-user-circle text-xl"></i>
+                    </button>
+                    <div id="profileDropdown" class="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-700 rounded-md shadow-lg hidden">
+                        <a href="#" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600">Profile</a>
+                        <a href="#" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600">Logout</a>
+                    </div>
+                </div>
+                {% endif %}
+    
+                <!-- Mobile Menu Button -->
+                <button class="md:hidden focus:outline-none" id="mobileMenuButton">
+                    <i class="fa-solid fa-bars text-xl"></i>
+                </button>
             </div>
         </nav>
+    
+        <!-- Mobile Menu Slide-In -->
+        <div id="mobileMenu" class="fixed inset-y-0 right-0 w-64 bg-white dark:bg-gray-800 transform translate-x-full transition-transform duration-300 md:hidden">
+            <div class="flex flex-col p-4 space-y-4 text-gray-700 dark:text-gray-200">
+                {% block navbar_mobile %}{% endblock %}
+                {% if user.is_authenticated %}
+                <a href="#" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600">Profile</a>
+                <a href="#" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600">Logout</a>
+                {% endif %}
+            </div>
+        </div>
     </header>
+    
 
-     <!-- Floating Message Popup -->
-     <div id="message-popup" class="fixed top-4 right-4 z-50 hidden max-w-sm w-full">
+    <!-- Floating Message Popup -->
+    <div id="message-popup" class="fixed top-4 right-4 z-50 hidden max-w-sm w-full">
         {% if messages %}
             {% for message in messages %}
                 <div class="p-4 mb-4 rounded-md text-white shadow-lg relative
@@ -73,29 +178,46 @@
     </main>
 
     <!-- Footer -->
-    <footer class="bg-white border-t mt-6">
-        <div class="max-w-7xl mx-auto py-4 px-4 sm:px-6 lg:px-8 text-center text-gray-500">
+    <footer class="bg-white text-gray-500 border-t mt-6">
+        <div class="max-w-7xl mx-auto py-4 px-4 sm:px-6 lg:px-8 text-center">
             &copy; 2024 QuizMaster. All rights reserved.
         </div>
     </footer>
 
     <script>
-        function onMenuToggle(e) {
-            const navlinks = document.querySelector(".navLinks");
-            e.classList.toggle("fa-bars");
-            e.classList.toggle("fa-times"); // Toggle between bars and times icon
-            navlinks.classList.toggle("left-[-100%]");
-            navlinks.classList.toggle("left-0");
+        // Function to toggle dark mode
+        function toggleTheme() {
+            const body = document.body;
+            const theme = body.classList.contains('dark') ? 'light' : 'dark';
+            body.classList.toggle('dark');
+            body.classList.toggle('light');
+            localStorage.setItem('theme', theme);
         }
 
-        // Display the message popup if there are messages
+        // Set the theme on page load
         document.addEventListener('DOMContentLoaded', function () {
-            const messages = document.querySelector('#message-popup');
-            if (messages.children.length > 0) {
-                messages.classList.remove('hidden');
-            }
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            document.body.classList.remove('light', 'dark');
+            document.body.classList.add(savedTheme);
+        });
+
+        // Toggle Profile Dropdown
+        const profileButton = document.getElementById('profileButton');
+        const profileDropdown = document.getElementById('profileDropdown');
+
+        profileButton.addEventListener('click', () => {
+            profileDropdown.classList.toggle('hidden');
+        });
+
+        // Toggle Mobile Menu
+        const mobileMenuButton = document.getElementById('mobileMenuButton');
+        const mobileMenu = document.getElementById('mobileMenu');
+
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('open');
         });
     </script>
+    
     {% block extra_js %}{% endblock %}
 </body>
 </html>

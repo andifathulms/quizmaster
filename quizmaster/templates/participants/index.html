@@ -1,0 +1,211 @@
+{% extends 'participants/base.html' %}
+
+{% block title %}Enhanced Quiz Dashboard{% endblock title %}
+
+{% block extra_css %}
+<style>
+    /* Light Mode Styles */
+    .bg-page {
+        background-color: #f0f4f8;
+    }
+    .text-primary {
+        color: #2c3e50;
+    }
+    .bg-card {
+        background-color: #ffffff;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+    }
+    .text-secondary {
+        color: #34495e;
+    }
+    .bg-progress-bar {
+        background-color: #3498db;
+    }
+
+    /* Dark Mode Styles */
+    body.dark .bg-page {
+        background-color: #1a202c;
+    }
+    body.dark .text-primary {
+        color: #81e6d9;
+    }
+    body.dark .bg-card {
+        background-color: #2d3748;
+    }
+    body.dark .text-secondary {
+        color: #a0aec0;
+    }
+    body.dark .bg-progress-bar {
+        background-color: #4fd1c5;
+    }
+    body.dark .btn {
+        background-color: #4a5568;
+        color: #e2e8f0;
+    }
+    body.dark .btn:hover {
+        background-color: #718096;
+    }
+    body.dark section {
+        background-color: #1a202c;
+    }
+
+    /* Card Hover Effect */
+    .bg-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        border-radius: inherit;
+        padding: 2px;
+        background: linear-gradient(45deg, #ff00ff, #00ffff);
+        -webkit-mask: 
+            linear-gradient(#fff 0 0) content-box, 
+            linear-gradient(#fff 0 0);
+        -webkit-mask-composite: xor;
+        mask-composite: exclude;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+
+    .bg-card:hover::before {
+        opacity: 1;
+    }
+
+    .bg-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Additional Styles */
+    .btn {
+        transition: all 0.3s ease;
+        padding: 0.75rem 1.5rem;
+        font-weight: 600;
+    }
+    .btn:hover {
+        transform: translateY(-2px);
+    }
+    .progress-bar-animated {
+        animation: progress-bar-stripes 1s linear infinite;
+    }
+    @keyframes progress-bar-stripes {
+        0% { background-position: 1rem 0; }
+        100% { background-position: 0 0; }
+    }
+    .section-title {
+        font-size: 2.5rem;
+        font-weight: 700;
+        margin-bottom: 2rem;
+        padding-bottom: 0.5rem;
+        border-bottom: 3px solid #3498db;
+        display: inline-block;
+    }
+    body.dark .section-title {
+        border-bottom-color: #4fd1c5;
+    }
+</style>
+{% endblock extra_css %}
+
+{% block content %}
+<div class="flex justify-center items-center min-h-screen" style="margin-top: 8rem;">
+    <div class="w-full max-w-7xl bg-page dark:bg-[#2b2b2b] shadow-xl rounded-lg p-8">
+        <h1 class="text-5xl font-bold mb-12 text-primary text-center">Quiz Dashboard</h1>
+        
+        <!-- Progress and Statistics Section -->
+        <section class="mb-16"> <!-- Increased bottom margin -->
+            <div class="bg-card dark:bg-[#3a3a3a] shadow-lg rounded-lg p-6">
+                <div class="flex flex-wrap justify-between items-center mb-4">
+                    <h2 class="text-2xl font-semibold text-primary">Your Progress</h2>
+                    <p class="text-lg font-semibold text-primary">Average Score: 85%</p>
+                </div>
+                <p class="text-lg mb-2 text-secondary">Quizzes Completed: 3 / 10</p>
+                <div class="w-full bg-gray-200 dark:bg-[#4a5568] rounded-full h-4 mb-4">
+                    <div class="bg-progress-bar h-4 rounded-full progress-bar-animated" style="width: 30%;"></div>
+                </div>
+                <p class="text-sm text-secondary">Keep it up! You're making great progress.</p>
+            </div>
+        </section>
+
+        <!-- Upcoming Quizzes Section -->
+        <section class="mb-16"> <!-- Increased bottom margin -->
+            <h2 class="section-title text-primary">Upcoming Quizzes</h2>
+            <div class="grid gap-8 lg:grid-cols-2">
+                <div class="bg-card dark:bg-[#3a3a3a] shadow-lg rounded-lg p-6">
+                    <h3 class="text-2xl font-bold text-primary mb-3">Math Quiz 1</h3>
+                    <p class="text-secondary mb-2"><i class="fas fa-calendar-alt mr-2"></i>Oct 15, 2024 10:00 AM</p>
+                    <p class="text-secondary mb-4"><i class="fas fa-clock mr-2"></i>Duration: 60 minutes</p>
+                    <button class="btn bg-blue-500 hover:bg-blue-600 text-white rounded-full">
+                        <i class="fas fa-info-circle mr-2"></i>View Details
+                    </button>
+                </div>
+                <div class="bg-card dark:bg-[#3a3a3a] shadow-lg rounded-lg p-6">
+                    <h3 class="text-2xl font-bold text-primary mb-3">History Quiz</h3>
+                    <p class="text-secondary mb-2"><i class="fas fa-calendar-alt mr-2"></i>Oct 20, 2024 2:00 PM</p>
+                    <p class="text-secondary mb-4"><i class="fas fa-clock mr-2"></i>Duration: 45 minutes</p>
+                    <button class="btn bg-blue-500 hover:bg-blue-600 text-white rounded-full">
+                        <i class="fas fa-info-circle mr-2"></i>View Details
+                    </button>
+                </div>
+                <div class="bg-card dark:bg-[#3a3a3a] shadow-lg rounded-lg p-6">
+                    <h3 class="text-2xl font-bold text-primary mb-3">History Quiz</h3>
+                    <p class="text-secondary mb-2"><i class="fas fa-calendar-alt mr-2"></i>Oct 20, 2024 2:00 PM</p>
+                    <p class="text-secondary mb-4"><i class="fas fa-clock mr-2"></i>Duration: 45 minutes</p>
+                    <button class="btn bg-blue-500 hover:bg-blue-600 text-white rounded-full">
+                        <i class="fas fa-info-circle mr-2"></i>View Details
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- To-Do Quizzes Section -->
+        <section class="mb-16"> <!-- Increased bottom margin -->
+            <h2 class="section-title text-primary">Quizzes to Do</h2>
+            <div class="grid gap-8 lg:grid-cols-2">
+                <div class="bg-card dark:bg-[#3a3a3a] shadow-lg rounded-lg p-6">
+                    <h3 class="text-2xl font-bold text-primary mb-3">Science Quiz</h3>
+                    <p class="text-secondary mb-2"><i class="fas fa-calendar-alt mr-2"></i>Deadline: Oct 10, 2024 11:59 PM</p>
+                    <p class="text-secondary mb-4"><i class="fas fa-hourglass-half mr-2"></i>Time remaining: 2 days</p>
+                    <button class="btn bg-green-500 hover:bg-green-600 text-white rounded-full">
+                        <i class="fas fa-play mr-2"></i>Start Now
+                    </button>
+                </div>
+                <div class="bg-card dark:bg-[#3a3a3a] shadow-lg rounded-lg p-6">
+                    <h3 class="text-2xl font-bold text-primary mb-3">Geography Quiz</h3>
+                    <p class="text-secondary mb-2"><i class="fas fa-calendar-alt mr-2"></i>Deadline: Oct 12, 2024 11:59 PM</p>
+                    <p class="text-secondary mb-4"><i class="fas fa-hourglass-half mr-2"></i>Time remaining: 4 days</p>
+                    <button class="btn bg-green-500 hover:bg-green-600 text-white rounded-full">
+                        <i class="fas fa-play mr-2"></i>Start Now
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Completed Quizzes Section -->
+        <section>
+            <h2 class="section-title text-primary">Completed Quizzes</h2>
+            <div class="grid gap-8 lg:grid-cols-2">
+                <div class="bg-card dark:bg-[#3a3a3a] shadow-lg rounded-lg p-6">
+                    <h3 class="text-2xl font-bold text-primary mb-3">English Quiz</h3>
+                    <p class="text-secondary mb-2"><i class="fas fa-calendar-check mr-2"></i>Completed on: Oct 2, 2024 3:00 PM</p>
+                    <p class="text-secondary mb-4"><i class="fas fa-star mr-2"></i>Score: 92%</p>
+                    <button class="btn bg-gray-500 hover:bg-gray-600 text-white rounded-full">
+                        <i class="fas fa-eye mr-2"></i>Review
+                    </button>
+                </div>
+                <div class="bg-card dark:bg-[#3a3a3a] shadow-lg rounded-lg p-6">
+                    <h3 class="text-2xl font-bold text-primary mb-3">Physics Quiz</h3>
+                    <p class="text-secondary mb-2"><i class="fas fa-calendar-check mr-2"></i>Completed on: Sep 28, 2024 1:00 PM</p>
+                    <p class="text-secondary mb-4"><i class="fas fa-star mr-2"></i>Score: 78%</p>
+                    <button class="btn bg-gray-500 hover:bg-gray-600 text-white rounded-full">
+                        <i class="fas fa-eye mr-2"></i>Review
+                    </button>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+{% endblock content %}

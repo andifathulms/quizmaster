@@ -5,6 +5,10 @@ from django.shortcuts import render
 
 @login_required
 def index(request: HttpRequest) -> HttpResponse:
-    context_data = {}
+    instructor = request.user.get_instructor()
 
-    return render(request, "index.html", context_data)
+    context_data = {
+        "title": "Dashboard",
+        "instructor": instructor
+    }
+    return render(request, "instructors/index.html", context_data)
